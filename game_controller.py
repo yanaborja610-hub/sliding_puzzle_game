@@ -15,7 +15,11 @@ class Game:
         self.clock = pygame.time.Clock()
         self.shuffle_time = 0
         self.start_shuffle = False
-
+        self.previous_choice = " "
+        self.start_game = False
+        self.start_timer = 0
+        self.elapsed_time = 0
+        
     def create_game(self):
         grid = [[x + y * game_size for x in range(1, game_size + 1)] for y in range(game_size)]
         grid[-1][-1] = 0
@@ -37,6 +41,16 @@ class Game:
                     break
             if len(possible_moves) > 0:
                 break
+
+        if self.previous_choice == "right":
+            possible_moves.remove("left") if "left" in possible_moves else possible_moves
+        elif self.previous_choice == "left":
+            possible_moves.remove("right") if "right" in possible_moves else possible_moves
+        elif self.previous_choice == "up":
+            possible_moves.remove("down") if "down" in possible_moves else possible_moves
+        elif self.previous_choice == "down":
+            possible_moves.remove("up") if "up" in possible_moves else possible_moves
+
 
         choice = random.choice(possible_moves)
         if choice == "right":
@@ -87,6 +101,13 @@ class Game:
     def update(self):
         self.all_sprites.update()
 
+        if self.start_shuffle:
+            self.shuffle()
+            self.draw_tiles()
+            self.shuffle_time += 1
+            if self.shuffle_time > 120:
+                self.start_shuffle = False
+
     def draw_grid(self):
         for row in range(-1, game_size * tile_size, tile_size):
             pygame.draw.line(self.screen, light_grey, (row, 0), (row, game_size * tile_size))
@@ -133,9 +154,6 @@ class Game:
                             self.start_shuffle = True
                         if button.text == "Reset":
                             self.new()
-
-
-
 
 game = Game()
 while True:
