@@ -73,6 +73,9 @@ class Game:
                             if tile.right() and self.tiles_grid[row][col + 1] == 0:
                                 self.tiles_grid[row][col], self.tiles_grid[row][col + 1] = self.tiles_grid[row][col + 1], self.tiles_grid[row][col]
 
+                            if tile.left() and self.tiles_grid[row][col - 1] == 0:
+                                self.tiles_grid[row][col], self.tiles_grid[row][col - 1] = self.tiles_grid[row][col - 1], self.tiles_grid[row][col]
+
                             self.draw_tiles()
 
 
