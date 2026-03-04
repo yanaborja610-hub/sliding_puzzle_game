@@ -17,10 +17,24 @@ class Game:
     def create_game(self):
         grid = [[x + y * game_size for x in range(1, game_size + 1)] for y in range(game_size)]
         grid[-1][-1] = 0
-        print(grid)
+        return grid
+
+    def draw_tiles(self ):
+        self.tiles = []
+        for row, x in enumerate(self.tiles_grid):
+            self.tiles.append([])
+            for col, tile in enumerate(x):
+                if tile != 0:
+                    self.tiles[row].append(Tile(self, col,row, str(tile)))
+                else:
+                    self.tiles[row].append(Tile(self, col, row, "empty"))
+
 
     def new(self):
-        self.create_game()
+        self.all_sprites = pygame.sprite.Group()
+        self.tiles_grid = self.create_game()
+        self.tiles_grid_completed = self.create_game()
+        self.draw_tiles()
 
     def run(self):
         self.playing = True
@@ -31,7 +45,7 @@ class Game:
             self.draw()
 
     def update(self):
-        pass
+        self.all_sprites.update()
 
     def draw_grid(self):
         for row in range(-1, game_size * tile_size, tile_size):
@@ -41,6 +55,7 @@ class Game:
 
     def draw(self):
         self.screen.fill(background_color)
+        self.all_sprites.draw(self.screen)
         self.draw_grid()
         pygame.display.flip()
 
