@@ -19,6 +19,16 @@ class Game:
         self.start_game = False
         self.start_timer = False
         self.elapsed_time = 0
+        self.high_score = float(self.get_high_score()[0])
+
+    def get_high_score(self):
+        with open("high_score.txt", "r") as file:
+            scores = file.read().splitlines()
+        return scores
+
+    def save_score(self):
+        with open("high_score.txt", "w") as file:
+            file.write(str("%.3f\n" % self.high_score))
 
     def create_game(self):
         grid = [[x + y * game_size for x in range(1, game_size + 1)] for y in range(game_size)]
@@ -108,6 +118,11 @@ class Game:
         if self.start_game:
             if self.tiles_grid == self.tiles_grid_completed:
                 self.start_game = False
+                if self.high_score > 0:
+                    self.high_score = self.elapsed_time if self.elapsed_time < self.high_score else self.high_score
+                else:
+                    self.high_score = self.elapsed_time
+                self.save_score()
 
             if self.start_timer:
                 self.timer = time.time()
@@ -139,7 +154,7 @@ class Game:
             button.draw(self.screen)
 
         ui_element(550,35, "%.3f" % self.elapsed_time).draw(self.screen)
-
+        ui_element(430, 300, "High Score - %.3f" % (self.high_score if self.high_score > 0 else 0)).draw(self.screen)
         pygame.display.flip()
 
     def events(self):
