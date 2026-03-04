@@ -1,6 +1,9 @@
 import pygame
 import random
 import time
+
+from pygame.examples import grid
+
 from game_components import*
 from game_settings import*
 
@@ -11,8 +14,13 @@ class Game:
         pygame.display.set_caption(title)
         self.clock = pygame.time.Clock()
 
+    def create_game(self):
+        grid = [[x + y * game_size for x in range(1, game_size + 1)] for y in range(game_size)]
+        grid[-1][-1] = 0
+        print(grid)
+
     def new(self):
-        pass
+        self.create_game()
 
     def run(self):
         self.playing = True
