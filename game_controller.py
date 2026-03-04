@@ -21,6 +21,41 @@ class Game:
         grid[-1][-1] = 0
         return grid
 
+    def shuffle(self):
+        possible_moves = []
+        for row, tiles in enumerate(self.tiles):
+            for col, tile in enumerate(tiles):
+                if tile.text == "empty":
+                    if tile.right():
+                        possible_moves.append("right")
+                    if tile.left():
+                        possible_moves.append("left")
+                    if tile.up():
+                        possible_moves.append("up")
+                    if tile.down():
+                        possible_moves.append("down")
+                    break
+            if len(possible_moves) > 0:
+                break
+
+        choice = random.choice(possible_moves)
+        if choice == "right":
+            self.tiles_grid[row][col], self.tiles_grid[row][col + 1] = self.tiles_grid[row][col + 1], \
+            self.tiles_grid[row][col]
+
+        elif choice == "left":
+            self.tiles_grid[row][col], self.tiles_grid[row][col - 1] = self.tiles_grid[row][col - 1], \
+            self.tiles_grid[row][col]
+
+        elif choice == "up":
+            self.tiles_grid[row][col], self.tiles_grid[row - 1][col] = self.tiles_grid[row - 1][col], \
+            self.tiles_grid[row][col]
+
+        elif choice == "down":
+            self.tiles_grid[row][col], self.tiles_grid[row + 1][col] = self.tiles_grid[row + 1][col], \
+            self.tiles_grid[row][col]
+
+
     def draw_tiles(self ):
         self.tiles = []
         for row, x in enumerate(self.tiles_grid):
