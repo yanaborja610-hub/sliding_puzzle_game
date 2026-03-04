@@ -65,6 +65,13 @@ class Game:
                 pygame.quit()
                 quit(0)
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                for row, tiles in enumerate(self.tiles):
+                    for col, tile in enumerate(tiles):
+                        if tile.click(mouse_x, mouse_y):
+                            print(tile.text)
+
 
 
 game = Game()
