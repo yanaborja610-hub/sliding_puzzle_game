@@ -15,7 +15,12 @@ class Game:
         pass
 
     def run(self):
-        pass
+        self.playing = True
+        while self.playing:
+            self.clock.tick(fps)
+            self.events()
+            self.update()
+            self.draw()
 
     def update(self):
         pass
@@ -24,7 +29,11 @@ class Game:
         pass
 
     def events(self):
-        pass
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit(0)
+
 
 
 game = Game()
