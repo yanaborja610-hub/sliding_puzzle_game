@@ -43,3 +43,34 @@ class Tile(pygame.sprite.Sprite):
 
     def down(self):
         return self.rect.y + tile_size < game_size * tile_size
+
+class ui_element:
+    def __init__(self, x, y, text):
+        self.x, self.y = x, y
+        self.text = text
+
+    def draw(self, screen):
+        font = pygame.font.SysFont("Consolas", 50)
+        text = font.render(self.text, True, white)
+        screen.blit(text, (self.x, self.y))
+
+class button:
+    def __init__(self, x, y, button_width, button_height, text, button_colour, text_colour):
+        self.x, self.y = x, y
+        self.button_width = button_width
+        self.button_height = button_height
+        self.text = text
+        self.colour, self.text_colour = button_colour, text_colour
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.colour,
+                         (self.x, self.y, self.button_width, self.button_height))
+        font = pygame.font.SysFont("Consolas", 30)
+        text = font.render(self.text, True, self.text_colour)
+        self.font_size = font.size(self.text)
+        draw_x = self.x + (self.button_width / 2) - self.font_size[0] / 2
+        draw_y = self.y + (self.button_height / 2) - self.font_size[1] / 2
+        screen.blit(text, (draw_x, draw_y))
+
+    def click(self, mouse_x, mouse_y):
+        return self.x <= mouse_x <= self.x + self.button_width and self.y <= mouse_y <= self.y + self.button_height
