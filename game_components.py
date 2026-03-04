@@ -22,6 +22,8 @@ class Tile(pygame.sprite.Sprite):
             draw_x = (tile_size / 2) - self.font_size[0] / 2
             draw_y = (tile_size / 2) - self.font_size[1] / 2
             self.image.blit(font_surface, (draw_x, draw_y))
+        else:
+            self.image.fill(background_color)
 
     def update(self):
         self.rect.x = self.x * tile_size
