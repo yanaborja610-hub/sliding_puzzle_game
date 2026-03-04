@@ -70,7 +70,10 @@ class Game:
                 for row, tiles in enumerate(self.tiles):
                     for col, tile in enumerate(tiles):
                         if tile.click(mouse_x, mouse_y):
-                            print(tile.text)
+                            if tile.right() and self.tiles_grid[row][col + 1] == 0:
+                                self.tiles_grid[row][col], self.tiles_grid[row][col + 1] = self.tiles_grid[row][col + 1], self.tiles_grid[row][col]
+
+                            self.draw_tiles()
 
 
 
