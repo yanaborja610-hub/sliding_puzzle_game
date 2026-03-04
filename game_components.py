@@ -31,3 +31,15 @@ class Tile(pygame.sprite.Sprite):
 
     def click(self,mouse_x, mouse_y):
         return self.rect.left <= mouse_x <= self.rect.right and self.rect.top <= mouse_y <= self.rect.bottom
+
+    def right(self):
+        return self.rect.x + tile_size < game_size * tile_size
+
+    def left(self):
+        return self.rect.x - tile_size >= 0
+
+    def up(self):
+        return self.rect.y - tile_size >= 0
+
+    def down(self):
+        return self.rect.y + tile_size < game_size * tile_size
