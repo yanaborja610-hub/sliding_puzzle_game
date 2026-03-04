@@ -10,7 +10,7 @@ from game_settings import*
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((width, height))
+        self.screen = pygame.display.set_mode((grid_width, grid_height))
         pygame.display.set_caption(title)
         self.clock = pygame.time.Clock()
         self.shuffle_time = 0
