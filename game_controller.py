@@ -13,6 +13,8 @@ class Game:
         self.screen = pygame.display.set_mode((width, height))
         pygame.display.set_caption(title)
         self.clock = pygame.time.Clock()
+        self.shuffle_time = 0
+        self.start_shuffle = False
 
     def create_game(self):
         grid = [[x + y * game_size for x in range(1, game_size + 1)] for y in range(game_size)]
@@ -34,6 +36,9 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.tiles_grid = self.create_game()
         self.tiles_grid_completed = self.create_game()
+        self.button_list = []
+        self.button_list.append(button(500,100,200,50,"Shuffle", white, black))
+        self.button_list.append(button(500,170,200,50,"Reset", white, black))
         self.draw_tiles()
 
     def run(self):
@@ -57,6 +62,8 @@ class Game:
         self.screen.fill(background_color)
         self.all_sprites.draw(self.screen)
         self.draw_grid()
+        for button in self.button_list:
+            button.draw(self.screen)
         pygame.display.flip()
 
     def events(self):
@@ -66,7 +73,7 @@ class Game:
                 quit(0)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_x, mouse_y = pygame.mouse.get_pos()
+                mouse_x, mouse_y = event.pos
                 for row, tiles in enumerate(self.tiles):
                     for col, tile in enumerate(tiles):
                         if tile.click(mouse_x, mouse_y):
@@ -83,6 +90,15 @@ class Game:
                                 self.tiles_grid[row][col], self.tiles_grid[row + 1][col] = self.tiles_grid[row + 1][col], self.tiles_grid[row][col]
 
                             self.draw_tiles()
+
+                for button in self.button_list:
+                    if button.click(mouse_x, mouse_y):
+                        if button.text == "Shuffle":
+                            self.shuffle_time = 0
+                            self.start_shuffle = True
+                        if button.text == "Reset":
+                            self.new()
+
 
 
 
