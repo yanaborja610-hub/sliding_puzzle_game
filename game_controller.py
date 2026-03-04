@@ -26,7 +26,7 @@ class Game:
         pass
 
     def draw(self):
-        pass
+        self.screen.fill(background_color)
 
     def events(self):
         for event in pygame.event.get():
