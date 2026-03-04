@@ -14,6 +14,12 @@ class Tile(pygame.sprite.Sprite):
         self.y = y
         self.text = text
         self.rect = self.image.get_rect()
+        if self.text != "empty":
+            self.font = pygame.font.Sysfont("Consolas", 50)
+            font_surface = self.font.render(self.text, True, black)
+            self.image.fill(white)
+            self.font_size = self.font.size(self.text)
+            self.image.blit(font_surface, (self.x, self.y))
 
     def update(self):
         self.rect.x = self.x * tile_size
